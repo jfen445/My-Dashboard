@@ -3,7 +3,7 @@ import React from "react";
 export default function IndexPage() {
   return (
     <>
-      <h1>Index Page</h1>
+      <h1> HI </h1>{" "}
     </>
   );
 }
