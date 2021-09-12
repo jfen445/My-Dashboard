@@ -1,0 +1,69 @@
+.wrapper {
+    height: 500px;
+    width: 300px;
+    background: red;
+}
+
+.box {
+    position: absolute;
+    width: 387px;
+    height: 120px;
+    left: 0px;
+    top: 0px;
+    background: #337394;
+    border-radius: 20px;
+}
+
+.image {
+    position: absolute;
+    left: 30%;
+    right: 77.26%;
+    top: 50%;
+    bottom: 25%;
+}
+
+.location {
+    position: absolute;
+    width: 127px;
+    height: 34px;
+    left: 130px;
+    top: 43px;
+    font-family: Work Sans;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 28px;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+}
+
+.temp {
+    position: absolute;
+    width: 81px;
+    height: 42px;
+    left: 294px;
+    top: 43px;
+    font-family: Work Sans;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 36px;
+    line-height: 42px;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+}
+
+.description {
+    position: absolute;
+    width: 174px;
+    height: 14px;
+    left: 130px;
+    top: 69px;
+    font-family: Work Sans;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 21px;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+    text-transform: capitalize;
+}
