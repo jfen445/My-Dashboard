@@ -31,31 +31,39 @@ function Weather() {
   };
 
   return (
-    <div className={styles.box}>
-      <Grid container spacing={1}>
-        <Grid item>
-          <ButtonBase
-            className={styles.image}
-            style={{ alignSelf: "center" }}
-            onClick={handleClick}
-          >
-            <img alt="" src={cloudimg} height={50} width={50} />
+    <div className={styles.wrapper}>
+      <Grid
+        container
+        spacing={1}
+        direction="row"
+        justifyContent="center"
+        alignItems="center"
+      >
+        <Grid item xs={6} sm={3} className={styles.center}>
+          <ButtonBase onClick={handleClick}>
+            <img
+              alt=""
+              src={`http://openweathermap.org/img/wn/${weatherInfo?.weather[0]?.icon}@2x.png`}
+              height={50}
+              width={50}
+              className={styles.image}
+            />
           </ButtonBase>
         </Grid>
-        <Grid item>
-          <Grid spacing={2} style={{ alignSelf: "center" }}>
-            <Grid item xs>
+        <Grid item xs={12} sm={6} className={styles.center}>
+          <Grid>
+            <Grid item>
               <Typography className={styles.location}>Auckland</Typography>
               <Typography className={styles.description}>
                 {weatherInfo?.weather[0]?.description}
               </Typography>
             </Grid>
           </Grid>
-          <Grid item>
-            <Typography className={styles.temp}>
-              {Math.trunc(weatherInfo?.main?.temp)} °C
-            </Typography>
-          </Grid>
+        </Grid>
+        <Grid item xs={6} sm={3} className={styles.center}>
+          <Typography className={styles.temp}>
+            {Math.trunc(weatherInfo?.main?.temp)} °C
+          </Typography>
         </Grid>
       </Grid>
     </div>
