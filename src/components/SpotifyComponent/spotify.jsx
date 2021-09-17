@@ -3,24 +3,14 @@ import { Grid } from "@material-ui/core";
 import ButtonBase from "@material-ui/core/ButtonBase";
 import Typography from "@material-ui/core/Typography";
 import SpotifyWebApi from "spotify-web-api-js";
-import { usePost, usePut } from "../../utils/crudHooks";
-import styles from "../../styling/SpotifyComponent.modules.scss";
+import styles from "../../styling/SpotifyComponent.module.scss";
+import play from "./images/play.png";
+import pause from "./images/pause.png";
+import skip from "./images/skip.png";
 
 export const authEndpoint = "https://accounts.spotify.com/authorize";
 const redirectURI = "http://localhost:3000/";
 const clientID = "66ea4aba7f9344fea526f6a5bf14d6bf";
-
-function fetchAccessToken() {
-  let token = "grant_type=authorization_code";
-  token +=
-    "&code=" +
-    "AQCp99V3OQxcUvw2_UkoAU6DWIW1J1WJZNKX9aBXMp218a-lZ_wXUzbeaMiDZDCp-XgmO2XusKFoE133cmSscO8Rcy7e06Hzu6h_PT6cWlhQuUFL-Tr_i4NgtmbxztVWAnl53TAO53jQ0PC9jDZYddvR7eZZzLxxQSk";
-  token += `&redirect_uri=${redirectURI}`;
-  token += `&client_id=${clientID}`;
-  token += `&client_secret=${process.env.SPOTIFY_CLIENT_SECRET}`;
-
-  return token;
-}
 
 const scopes = [
   "user-read-currently-playing",
@@ -48,17 +38,27 @@ export const accessUrl = `${authEndpoint}?client_id=${clientID}&redirect_uri=${r
   "%20"
 )}&response_type=token&show_dialog=true`;
 
-const spotify = new SpotifyWebApi();
+const spotifyObject = new SpotifyWebApi();
 
 const handleClickPause = () => {
-  spotify.pause();
+  spotifyObject.pause();
 };
 const handleClickPlay = () => {
-  spotify.play();
+  spotifyObject.play();
+  const song = spotifyObject.getMyCurrentPlayingTrack();
+  console.log(song);
+};
+
+const handleClickSkip = () => {
+  spotifyObject.skipToNext();
 };
 
 function Spotify() {
   const [token, setToken] = useState(null);
+  const [song, setSong] = useState(null);
+  const [image, setImage] = useState(null);
+  const [artist, setArtist] = useState(null);
+  const [playBackStatus, setPlayBackStatus] = useState(null);
 
   useEffect(() => {
     const hash = getTokenFromResponse();
@@ -69,25 +69,28 @@ function Spotify() {
     if (ttoken) {
       setToken(ttoken);
       // giving the access token to that spotify api
-      spotify.setAccessToken(ttoken);
+      spotifyObject.setAccessToken(ttoken);
       console.log(ttoken);
-      spotify.getMe().then((user) => {
+      spotifyObject.getMe().then((user) => {
         console.log("person", user);
       });
+      spotifyObject
+        .getMyCurrentPlayingTrack("37i9dQZEVXcJZyENOWUFo7")
+        .then((response) => {
+          console.log(response);
+          console.log("==========================");
+          console.log(response?.item?.name);
+          console.log("==========================");
+          setSong(response?.item?.name);
+          setImage(response.item?.album?.images?.[2].url);
+          setArtist(response?.item?.artists?.[0]?.name);
+          setPlayBackStatus(response?.is_playing);
+          console.log(response.item?.album?.images?.[2]?.url);
+        });
     }
-    console.log("i have a token", token);
   });
+
   return (
-    // <div className={styles.wrapper}>
-    //   <Grid>
-    //     <Grid item xs={6} sm={3}>
-    //       <ButtonBase onClick={handleClickPause}>Pause</ButtonBase>
-    //     </Grid>
-    //     <Grid item xs={6} sm={3}>
-    //       <ButtonBase onClick={handleClickPlay}>Play</ButtonBase>
-    //     </Grid>
-    //   </Grid>
-    // </div>
     <div className={styles.wrapper}>
       <Grid
         container
@@ -96,21 +99,45 @@ function Spotify() {
         justifyContent="center"
         alignItems="center"
       >
-        <Grid item xs={6} sm={3} className={styles.center}>
-          <ButtonBase onClick={handleClickPause}>Pause</ButtonBase>
+        <Grid item xs={4} sm={4} className={styles.center}>
+          <img
+            alt=""
+            src={image}
+            height={80}
+            width={80}
+            className={styles.image}
+          />
         </Grid>
-        <Grid item xs={12} sm={6} className={styles.center}>
+        <Grid item xs={4} sm={4}>
           <Grid>
             <Grid item>
-              <Typography>Song</Typography>
-              <Typography className={styles.description}>Aritist</Typography>
+              <Typography className={styles.song}>{song}</Typography>
+              <Typography className={styles.artist}>{artist}</Typography>
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={6} sm={3} className={styles.center}>
-          <Typography>
-            <ButtonBase onClick={handleClickPlay}>Play</ButtonBase>
-          </Typography>
+        <Grid item xs={2} sm={2} className={styles.wrapper}>
+          {playBackStatus ? (
+            <ButtonBase onClick={handleClickPause}>
+              <img alt="" src={pause} height={50} width={50} />
+            </ButtonBase>
+          ) : (
+            <ButtonBase onClick={handleClickPlay}>
+              <img alt="" src={play} height={50} width={50} />
+            </ButtonBase>
+          )}{" "}
+          {Spotify}
+        </Grid>
+        <Grid item xs={2} sm={2}>
+          <ButtonBase onClick={handleClickSkip}>
+            <img
+              alt=""
+              src={skip}
+              height={50}
+              width={50}
+              className={styles.image}
+            />
+          </ButtonBase>
         </Grid>
       </Grid>
     </div>
