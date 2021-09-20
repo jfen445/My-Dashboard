@@ -3,6 +3,7 @@ import { Grid } from "@material-ui/core";
 import Weather from "../../components/WeatherComponent/Weather";
 import Spotify, { accessUrl } from "../../components/SpotifyComponent/Spotify";
 import Time from "../../components/CurrentTimeComponent/Time";
+import Sidebar from "../../components/SidebarComponent/Sidebar";
 import Reminder from "../../components/RemindersComponent/Reminder";
 import styles from "../../styling/HomePage.module.scss";
 
@@ -26,7 +27,11 @@ export default function HomePage() {
           alignItems="stretch"
           className={styles.full}
         >
-          <Grid style={{ background: "black" }}>Hello</Grid>
+          <Grid style={{ background: "black" }}>
+            <div className={styles.navbar}>
+              <Sidebar />
+            </div>
+          </Grid>
           <Grid style={{ background: "grey" }}>
             <div className={styles.myDashboard}>My Dashboard</div>
             <div className={styles.time}>
