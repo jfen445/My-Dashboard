@@ -50,12 +50,12 @@ const handleClickSkip = () => {
 };
 
 function Spotify() {
-  const [token, setToken] = useState(null);
-  const [song, setSong] = useState(null);
-  const [artist, setArtist] = useState(null);
-  const [image, setImage] = useState(null);
-  const [playBackStatus, setPlayBackStatus] = useState(null);
-  const [playPause, setPlayPause] = useState(null);
+  const [token, setToken] = useState(null); // to set the spotify authorization token
+  const [song, setSong] = useState(null); // song name
+  const [artist, setArtist] = useState(null); // song artitst
+  const [image, setImage] = useState(null); // song album image
+  const [playBackStatus, setPlayBackStatus] = useState(null); // if song is playing or not
+  const [playPause, setPlayPause] = useState(null); // play pause image
 
   useEffect(() => {
     const hash = getTokenFromResponse();
@@ -74,16 +74,10 @@ function Spotify() {
       spotifyObject
         .getMyCurrentPlayingTrack("37i9dQZEVXcJZyENOWUFo7")
         .then((response) => {
-          console.log(response);
-          console.log("==========================");
-          console.log(response?.item?.name);
-          console.log("==========================");
           setSong(response?.item?.name);
           setImage(response.item?.album?.images?.[2].url);
           setArtist(response?.item?.artists?.[0]?.name);
           setPlayBackStatus(response?.is_playing);
-          console.log(response.item?.album?.images?.[2]?.url);
-          console.log();
         });
       spotifyObject
         .getMyCurrentPlaybackState("37i9dQZEVXcJZyENOWUFo7")
@@ -93,13 +87,16 @@ function Spotify() {
     }
   });
 
-  const handleClickPlay = () => {
-    if (spotifyObject.getMyCurrentPlaybackState()) {
+  // method that toggles the play pause image
+  const playPauseToggle = () => {
+    if (playBackStatus) {
       spotifyObject.pause();
       setPlayPause(play);
+      setPlayBackStatus(false);
     } else {
       spotifyObject.play();
       setPlayPause(pause);
+      setPlayBackStatus(true);
     }
   };
 
@@ -130,7 +127,7 @@ function Spotify() {
           </Grid>
         </Grid>
         <Grid item xs={2} sm={2} className={styles.wrapper}>
-          <ButtonBase onClick={handleClickPlay}>
+          <ButtonBase onClick={() => playPauseToggle()}>
             <img alt="" src={playPause} height={50} width={50} />
           </ButtonBase>
         </Grid>
