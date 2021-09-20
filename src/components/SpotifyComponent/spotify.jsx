@@ -40,14 +40,10 @@ export const accessUrl = `${authEndpoint}?client_id=${clientID}&redirect_uri=${r
 
 const spotifyObject = new SpotifyWebApi();
 
-const handleClickPause = () => {
-  spotifyObject.pause();
-};
-const handleClickPlay = () => {
-  spotifyObject.play();
-  const song = spotifyObject.getMyCurrentPlayingTrack();
-  console.log(song);
-};
+// const handleClickPause = () => {
+//   spotifyObject.pause();
+//   setImage(play);
+// };
 
 const handleClickSkip = () => {
   spotifyObject.skipToNext();
@@ -56,9 +52,10 @@ const handleClickSkip = () => {
 function Spotify() {
   const [token, setToken] = useState(null);
   const [song, setSong] = useState(null);
-  const [image, setImage] = useState(null);
   const [artist, setArtist] = useState(null);
+  const [image, setImage] = useState(null);
   const [playBackStatus, setPlayBackStatus] = useState(null);
+  const [playPause, setPlayPause] = useState(null);
 
   useEffect(() => {
     const hash = getTokenFromResponse();
@@ -86,9 +83,25 @@ function Spotify() {
           setArtist(response?.item?.artists?.[0]?.name);
           setPlayBackStatus(response?.is_playing);
           console.log(response.item?.album?.images?.[2]?.url);
+          console.log();
+        });
+      spotifyObject
+        .getMyCurrentPlaybackState("37i9dQZEVXcJZyENOWUFo7")
+        .then((response) => {
+          console.log(response);
         });
     }
   });
+
+  const handleClickPlay = () => {
+    if (spotifyObject.getMyCurrentPlaybackState()) {
+      spotifyObject.pause();
+      setPlayPause(play);
+    } else {
+      spotifyObject.play();
+      setPlayPause(pause);
+    }
+  };
 
   return (
     <div className={styles.wrapper}>
@@ -117,16 +130,9 @@ function Spotify() {
           </Grid>
         </Grid>
         <Grid item xs={2} sm={2} className={styles.wrapper}>
-          {playBackStatus ? (
-            <ButtonBase onClick={handleClickPause}>
-              <img alt="" src={pause} height={50} width={50} />
-            </ButtonBase>
-          ) : (
-            <ButtonBase onClick={handleClickPlay}>
-              <img alt="" src={play} height={50} width={50} />
-            </ButtonBase>
-          )}{" "}
-          {Spotify}
+          <ButtonBase onClick={handleClickPlay}>
+            <img alt="" src={playPause} height={50} width={50} />
+          </ButtonBase>
         </Grid>
         <Grid item xs={2} sm={2}>
           <ButtonBase onClick={handleClickSkip}>

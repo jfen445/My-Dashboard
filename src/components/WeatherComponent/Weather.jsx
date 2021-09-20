@@ -44,8 +44,8 @@ function Weather() {
             <img
               alt=""
               src={`http://openweathermap.org/img/wn/${weatherInfo?.weather[0]?.icon}@2x.png`}
-              height={50}
-              width={50}
+              height={80}
+              width={80}
               className={styles.image}
             />
           </ButtonBase>
