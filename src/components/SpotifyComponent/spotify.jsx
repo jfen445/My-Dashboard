@@ -82,7 +82,11 @@ function Spotify() {
       spotifyObject
         .getMyCurrentPlaybackState("37i9dQZEVXcJZyENOWUFo7")
         .then((response) => {
-          console.log(response);
+          if (response) {
+            setPlayPause(pause);
+          } else {
+            setPlayPause(play);
+          }
         });
     }
   });
