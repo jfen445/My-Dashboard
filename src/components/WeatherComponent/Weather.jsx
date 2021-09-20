@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from "react";
 // eslint-disable-next-line import/no-unresolved
-import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
 import ButtonBase from "@material-ui/core/ButtonBase";
 import { useGet } from "../../utils/crudHooks";
 import styles from "../../styling/WeatherComponent.module.scss";
-import cloudimg from "./images/cloudrain.png";
 
 function Weather() {
   const [weatherInfo, setWeatherInfo] = useState(null);
