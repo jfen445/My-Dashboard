@@ -8,6 +8,8 @@ import play from "./images/play.png";
 import pause from "./images/pause.png";
 import skip from "./images/skip.png";
 
+export const spotifyObject = new SpotifyWebApi();
+
 export const authEndpoint = "https://accounts.spotify.com/authorize";
 const redirectURI = "http://localhost:3000/";
 const clientID = "66ea4aba7f9344fea526f6a5bf14d6bf";
@@ -37,8 +39,6 @@ export const getTokenFromResponse = () => {
 export const accessUrl = `${authEndpoint}?client_id=${clientID}&redirect_uri=${redirectURI}&scope=${scopes.join(
   "%20"
 )}&response_type=token&show_dialog=true`;
-
-const spotifyObject = new SpotifyWebApi();
 
 // const handleClickPause = () => {
 //   spotifyObject.pause();
