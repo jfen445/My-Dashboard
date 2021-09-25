@@ -11,7 +11,6 @@ function Time() {
       minute: "2-digit",
     });
 
-    console.log(time);
     setTime(timee);
   });
 
