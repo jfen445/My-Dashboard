@@ -1,0 +1,58 @@
+.wrapper {
+    background: #337394;
+    width: 339px;
+    height: 639px;
+    left: 1025px;
+    top: 139px;
+    border-radius: 20px;
+    display: grid;
+    align-items: center;
+}
+
+.alignitems {
+    display: flex;
+    align-items: center;
+}
+
+.nowPlaying {
+    margin-bottom: 55px;
+    white-space: nowrap;
+    // font-family: Work Sans;
+    // font-style: normal;
+    // font-weight: bold;
+    font-size: 36px;
+    // display: inline-block;
+    // line-height: 42px;
+    // letter-spacing: -0.02em;
+    color: #ffffff;
+}
+
+.song {
+    white-space: nowrap;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 28px;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+}
+
+.artist {
+    white-space: nowrap;
+    font-style: normal;
+    font-size: 18px;
+    line-height: 21px;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+    margin-bottom: 21px;
+}
+
+.playPause {
+    margin-left: 30px;
+    margin-right: 30px;
+}
+
+.image {
+    vertical-align: middle;
+    margin-bottom: 21px;
+}
