@@ -1,11 +1,11 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
-import Weather from "../../components/WeatherComponent/Weather";
 import SpotifyPlayer from "../../components/SpotifyComponent/SpotifyPlayer";
+import SpotifyAlbums from "../../components/SpotifyComponent/SpotifyAlbums";
+import SpotifySongs from "../../components/SpotifyComponent/SpotifySongs";
 import { accessUrl } from "../../components/SpotifyComponent/Spotify";
 import Time from "../../components/CurrentTimeComponent/Time";
 import Sidebar from "../../components/SidebarComponent/Sidebar";
-import Reminder from "../../components/RemindersComponent/Reminder";
 import styles from "../../styling/HomePage.module.scss";
 
 export default function MusicPage() {
@@ -38,9 +38,37 @@ export default function MusicPage() {
             <div className={styles.time}>
               <Time />
             </div>
-            <div className={styles.blocks}>
-              <SpotifyPlayer />
-            </div>
+            <Grid
+              // going accross
+              container
+              direction="row"
+              justifyContent="full"
+              alignItems="stretch"
+              className={styles.full}
+            >
+              <Grid>
+                <Grid
+                  // going accross
+                  container
+                  direction="column"
+                  justifyContent="full"
+                  alignItems="stretch"
+                  className={styles.full}
+                >
+                  <div>
+                    <SpotifyAlbums />
+                  </div>
+                  <div>
+                    <SpotifySongs />
+                  </div>
+                </Grid>
+              </Grid>
+              <Grid>
+                <div className={styles.blocks}>
+                  <SpotifyPlayer />
+                </div>
+              </Grid>
+            </Grid>
             <a href={accessUrl}>LOGIN TO SPOTIFY</a>
           </Grid>
 

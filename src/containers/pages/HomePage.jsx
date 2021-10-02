@@ -4,7 +4,6 @@ import Weather from "../../components/WeatherComponent/Weather";
 import Spotify, { accessUrl } from "../../components/SpotifyComponent/Spotify";
 import Time from "../../components/CurrentTimeComponent/Time";
 import Sidebar from "../../components/SidebarComponent/Sidebar";
-import Reminder from "../../components/RemindersComponent/Reminder";
 import styles from "../../styling/HomePage.module.scss";
 
 export default function HomePage() {

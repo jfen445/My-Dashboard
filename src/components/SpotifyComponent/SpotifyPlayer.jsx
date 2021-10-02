@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import { Grid } from "@material-ui/core";
 import ButtonBase from "@material-ui/core/ButtonBase";
 import Typography from "@material-ui/core/Typography";
-import SpotifyWebApi from "spotify-web-api-js";
 import styles from "../../styling/SpotifyPage/SpotifyPlayer.module.scss";
 import play from "./images/playCircle.png";
 import next from "./images/next.png";
@@ -25,26 +24,19 @@ const handleClickPrevious = () => {
 };
 
 function Spotify() {
-  const [token, setToken] = useState(null); // to set the spotify authorization token
   const [song, setSong] = useState(null); // song name
   const [artist, setArtist] = useState(null); // song artitst
   const [image, setImage] = useState(null); // song album image
   const [playBackStatus, setPlayBackStatus] = useState(null); // if song is playing or not
   const [playPause, setPlayPause] = useState(null); // play pause image
+  const [albumImages, setAlbumImages] = useState([]);
 
   useEffect(() => {
-    // const hash = getTokenFromResponse();
-    // window.location.hash = "";
-    // const ttoken = hash.access_token;
-    // console.log("okay");
-    spotifyObject.getMe().then((user) => {
-      console.log("person", user);
-    });
     spotifyObject
       .getMyCurrentPlayingTrack("37i9dQZEVXcJZyENOWUFo7")
       .then((response) => {
         setSong(response?.item?.name);
-        setImage(response.item?.album?.images?.[2].url);
+        setImage(response.item?.album?.images?.[0].url);
         setArtist(response?.item?.artists?.[0]?.name);
         setPlayBackStatus(response?.is_playing);
       });
@@ -56,6 +48,11 @@ function Spotify() {
         } else {
           setPlayPause(play);
         }
+      });
+    spotifyObject
+      .getUserPlaylists() // note that we don't pass a user id
+      .then((response) => {
+        setAlbumImages(response?.items);
       });
   });
 
